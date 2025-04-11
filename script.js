@@ -152,21 +152,62 @@ document.addEventListener('DOMContentLoaded', () => {
             zone.style.backgroundColor = '#fdfdfd'; // Slightly off-white background for zones in capture
         });
          // Ensure items within the clone are styled correctly if needed (usually inherited)
-
+         // Ensure each item has a fixed height and inner padding for reliable rendering
+cloneContainer.querySelectorAll('.item').forEach(item => {
+    item.style.width = '100px';
+    item.style.height = '160px';
+    item.style.padding = '5px';
+    item.style.boxSizing = 'border-box';
+    item.style.border = '1px solid #ddd';
+    item.style.borderRadius = '4px';
+    item.style.backgroundColor = '#ffffff';
+    item.style.display = 'flex';
+    item.style.flexDirection = 'column';
+    item.style.justifyContent = 'normal';
+    item.style.alignItems = 'center';
+    item.style.overflow = 'hidden';
+  
+    const img = item.querySelector('img');
+    if (img) {
+      img.style.width = '95px';
+      img.style.height = '95px';
+      img.style.objectFit = 'cover';
+      img.style.marginBottom = '5px';
+      img.style.userSelect = 'none';
+      img.style.pointerEvents = 'none';
+    }
+  
+    const p = item.querySelector('p');
+    if (p) {
+      p.style.fontSize = '0.75rem'; // Tailwind's text-xs
+      p.style.lineHeight = '1.2';
+      p.style.margin = '0';
+      p.style.textAlign = 'center';
+      p.style.overflow = 'visible';
+      p.style.textOverflow = 'ellipsis';
+      p.style.whiteSpace = 'normal';
+      p.style.wordBreak = 'break-word';
+      p.style.maxHeight = '4em'; // Make room for 2 lines
+    }
+  });
+  
         // 3. Append the clone to the body
         document.body.appendChild(cloneContainer);
         console.log("Off-screen clone created and styled.");
 
         // 4. Capture the clone
-        html2canvas(cloneContainer, {
-            backgroundColor: "#ffffff", // Ensure background is white
+        document.fonts.ready.then(() => {html2canvas(cloneContainer, {
+            backgroundColor: "#ffffff",
             logging: true,
             useCORS: true,
-            width: parseInt(targetWidth), // Explicitly set canvas width
-            windowWidth: parseInt(targetWidth), // Hint for rendering width
-            scrollX: 0, // Ensure capture starts at the left edge
-            scrollY: 0  // Ensure capture starts at the top edge
-        }).then(canvas => {
+            width: parseInt(targetWidth),
+            windowWidth: parseInt(targetWidth),
+            scrollX: 0,
+            scrollY: 0,
+            allowTaint: false,
+            scale: 2, // Increase resolution
+            imageTimeout: 2000 // Add delay for image rendering
+          }).then(canvas => {
             console.log("Canvas generated from clone");
 
             // Create a link element
@@ -189,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
+});
     // --- Initial Setup ---
     items.forEach(item => item.classList.remove('item-selected', 'dragging'));
     console.log("Tier list app initialized.");

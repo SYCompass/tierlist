@@ -105,7 +105,7 @@ h1, h2, span, p {
     transition: opacity 0.2s ease, transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out; /* Combine transitions */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Pushes text towards bottom */
+    justify-content: normal; /* Pushes text towards bottom */
     align-items: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     overflow: hidden; /* Prevent text overflow issues */
